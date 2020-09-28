@@ -54,16 +54,11 @@ object InternetAdvertisement {
     val deconstructedDomains: Set[String] = tupledData.flatMap(t => deconstructDomain(t._2)).toSet
 
     /**
-     * Check each element in tupledData if it ends with a given domain.
-     * If it is - increase the counter for the domain by the number
-     * on this element's counter.
+     * Filter tupledData to the array of elements relevant to the given domain, and sum their counters.
      * Return a tuple with newly formed counter and the domain
      */
     def countImpressionsPerDomain(domain: String): (Int, String) = {
-      var counter = 0
-      tupledData.foreach {
-        t: (Int, String) => if (t._2.endsWith(domain)) counter += t._1
-      }
+      val counter = tupledData.filter(_._2.endsWith(domain)).map(_._1).sum
 
       (counter, domain)
     }
